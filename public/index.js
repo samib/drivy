@@ -176,9 +176,9 @@ console.log(rentalModifications);
 function dateDiff(date1, date2) {
   var diff = {}                           
   var date1 = new Date(date1);
-  var date2 = new Date(date2);
-  var tmp = date2 - date1;
-  tmp = Math.floor(tmp / 1000);             
+  var date2 = new Date(date2);   
+  var tmp = date2 - date1;  //Difference
+  tmp = Math.floor(tmp / 1000);  //Convert
   diff.sec = tmp % 60;                    
 
   tmp = Math.floor((tmp - diff.sec) / 60);    
@@ -189,7 +189,7 @@ function dateDiff(date1, date2) {
 
   tmp = Math.floor((tmp - diff.hour) / 24);   
   diff.day = tmp+1;
-  return diff.day;
+  return diff.day;////return the time
 }
 
 
@@ -199,15 +199,15 @@ function dateDiff(date1, date2) {
 function exercice1_2() 
 {
 
-  for (var i = 0; i < rentals.length; i++)
+  for (var i = 0; i < rentals.length; i++) 
   {
     for (var j = 0; j < cars.length; j++)
     {
-      if (cars[j].id == rentals[i].carId)
+      if (cars[j].id == rentals[i].carId)   //uses the id corresponding 
       {       
-        var jours = dateDiff(rentals[i].pickupDate, rentals[i].returnDate);
+        var jours = dateDiff(rentals[i].pickupDate, rentals[i].returnDate); //uses dates to calculate the time
     
-        if (0 < jours <= 3) 
+        if (0 < jours <= 3) //conditions that alters the price
         { rentals[i].price = (jours)*(cars[j].pricePerDay*0.9) + rentals[i].distance*cars[j].pricePerKm ; }
 
         else if (3 < jours <= 9) 
@@ -230,12 +230,12 @@ function exercice3()
   {
     for (var j = 0; j < cars.length; j++)
     {
-      if (cars[j].id == rentals[i].carId)
+      if (cars[j].id == rentals[i].carId) //uses the id corresponding
       {
-        var jours = dateDiff(rentals[i].pickupDate, rentals[i].returnDate);
-        var com = rentals[i].price*0.3;
+        var jours = dateDiff(rentals[i].pickupDate, rentals[i].returnDate);//time
+        var com = rentals[i].price*0.3;//price of the commission
 
-        rentals[i].commission.insurance = com/2;
+        rentals[i].commission.insurance = com/2; //splits the price to the 3 parts
         rentals[i].commission.assistance = jours;
         rentals[i].commission.drivy= com - rentals[i].commission.assistance - rentals[i].commission.insurance;
       }
@@ -251,21 +251,20 @@ function exercice4()
   {
     for (var j = 0; j < cars.length; j++)
     {
-      if (cars[j].id == rentals[i].carId)
+      if (cars[j].id == rentals[i].carId)//uses the id corresponding
       {
-        var jours = dateDiff(rentals[i].pickupDate, rentals[i].returnDate);
-        var com = rentals[i].price*0.3;
+        var jours = dateDiff(rentals[i].pickupDate, rentals[i].returnDate);//time
+        var com = rentals[i].price*0.3;//commission
 
-        if (rentals[i].options.deductibleReduction == true) 
+        if (rentals[i].options.deductibleReduction == true) //check if the reduction exists
         { 
-        deduc = (jours + 1) * 4;
         rentals[i].commission.drivy = com - rentals[i].commission.insurance - rentals[i].commission.assistance + (jours + 1) * 4;
-        rentals[i].price = rentals[i].price + (jours + 1) * 4;
+        rentals[i].price = rentals[i].price + (jours + 1) * 4;//attributes the reduction
         }
         else
         {
         rentals[i].commission.drivy = com - rentals[i].commission.insurance - rentals[i].commission.assistance;
-        rentals[i].price = rentals[i].price;
+        rentals[i].price = rentals[i].price; //inchanged when no reduction
         }
 
       }
